@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <style>
+    /* Global CSS Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4; /* Light grey background */
+      margin: 0;
+      padding: 20px;
+      color: #333; /* Dark text */
+    }
+
+    .navbar {
+      background-color: #01070c; /* Dark navbar */
+      color: #fff; /* White text */
+      padding: 15px;
+      text-align: center;
+    }
+
+    .navbar a {
+      color: #cfcedb; /* Lighter navbar link color */
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .navbar a:hover {
+      background-color: #007bff; /* Blue background on hover */
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+    .search-results {
+      margin-top: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #02040d; /* Dark color for the heading */
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .product-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Center items */
+      gap: 20px;
+    }
+
+    .product-item {
+      background-color: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      width: calc(33.33% - 20px); /* 3 products per row */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .product-item:hover {
+      transform: translateY(-10px); /* Hover effect */
+    }
+
+    .product-item img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .product-details h3 {
+      color: #02040d; /* Dark text color for product name */
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .product-details p {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .add-to-cart {
+      background-color: #007bff; /* Blue background for buttons */
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .add-to-cart:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .no-results {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+      margin-top: 40px;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #02040d;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .product-item {
+        width: calc(50% - 20px); /* 2 products per row on smaller screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-item {
+        width: 100%; /* 1 product per row on very small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="{% url 'index' %}">Home</a>
+  </div>
+
+  {% if products %}
+    <div class="search-results">
+      <h2>Search Results for "{{ query }}"</h2>
+      <ul class="product-list">
+        {% for product in products %}
+          <li class="product-item">
+            <div class="product-details">
+              <h3>{{ product.name }}</h3>
+              <img src="{{ product.image.url }}" alt="{{ product.name }} Image">
+              <p><strong>Description:</strong> {{ product.description }}</p>
+              <p><strong>Price:</strong> ${{ product.price }}</p>
+            </div>
+            <!-- Add to Cart button -->
+            <form method="post" action="{% url 'add_to_cart' product.id %}">
+              {% csrf_token %}
+              <button type="submit" class="add-to-cart">Add to Cart</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="no-results">
+      <p>No products found for "{{ query }}".</p>
+      <a href="{% url 'index' %}" class="back-link">Back to Home</a>
+    </div>
+  {% endif %}
+</body>
+</html>

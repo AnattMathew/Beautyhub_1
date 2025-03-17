@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Invoice</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #f3e7e9, #e3eeff); /* Soft gradient background */
+            color: #333;
+            padding: 20px 0;
+        }
+
+        .order-summary {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fef6e4; /* Creamy background */
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .order-details, .product-details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .order-details p, .product-details p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .product-details h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .total-amount {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .back-to-main, button {
+            display: inline-block;
+            padding: 12px 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .back-to-main {
+            background-color: #f4a841;
+            color: #fff;
+        }
+
+        .back-to-main:hover {
+            background-color: #e39629;
+            transform: scale(1.05);
+        }
+
+        button {
+            background-color: #02040d; /* Dark button for printing */
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #333;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .order-summary {
+                padding: 20px;
+            }
+
+            .order-details p, .product-details p, .total-amount {
+                font-size: 14px;
+            }
+
+            .back-to-main, button {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="order-summary">
+        <h2>Invoice</h2>
+        <div class="order-details">
+            <p><strong>Full Name:</strong> {{ fullname }}</p>
+            <p><strong>Address:</strong> {{ address }}</p>
+            <p><strong>City:</strong> {{ city }}</p>
+            <p><strong>Postal Code:</strong> {{ postal_code }}</p>
+        </div>
+        <!-- <div class="product-details">
+            <h3>Product Details</h3>
+            {% for item in cart_products %}
+            <p><strong>{{ item.product }}</strong> - Quantity: {{ item.quantity }}</p>
+            {% endfor %}
+        </div> -->
+        <p class="total-amount">Total Amount: Rs.{{ total_amount }}</p>
+        <button onclick="window.print()">Download Invoice</button>
+        <a href="{% url 'index' %}" class="back-to-main">Continue Shopping</a>
+    </div>
+</body>
+</html>

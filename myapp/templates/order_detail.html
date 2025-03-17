@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Detail</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333; /* Text color */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #02040d; /* Dark color for headings */
+            font-size: 30px;
+        }
+
+        h2 {
+            color: #605c60; /* Slightly lighter for subheading */
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .order-info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .order-info strong {
+            color: #02040d;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #f9e5c8; /* Light yellow background for headers */
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+            cursor: pointer;
+        }
+
+        .navbar {
+            background-color: #02040d; /* Navbar background color */
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .navbar a {
+            color: #fff; /* Navbar link color */
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+
+            .navbar a {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{% url 'index' %}">Home</a> <!-- Home navbar option -->
+    </div>
+
+    <h1>Order Detail</h1>
+
+    <div class="order-info">
+        {% if request.user.is_superuser %}
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        {% endif %}
+        <p><strong>Full Name:</strong> {{ order.fullname }}</p>
+        <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.postal_code }}</p>
+        <p><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+        <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    </div>
+
+    <h2>Order Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

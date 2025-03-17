@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautyhub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        .header {
+            background-color: #2c2c2c;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header a, .header .logo {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+        }
+
+        .header a:hover, .header .logo:hover {
+            color: #f5a623;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .header .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav-links a {
+            margin-right: 20px;
+        }
+
+        .header .nav-links .profile {
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #2c2c2c;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #f5a623;
+        }
+
+        /* Slider */
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slides img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .slider-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .slider-controls button {
+            background-color: rgba(44, 44, 44, 0.7);
+            border: none;
+            color: white;
+            font-size: 20px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slider-controls button:hover {
+            background-color: #f5a623;
+        }
+
+        /* Product Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .products-heading {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .product {
+            text-align: center;
+            border: 2px solid #f5a623;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .product .title {
+            font-size: 16px;
+            color: #2c2c2c;
+            font-weight: bold;
+        }
+
+        .product .price {
+            font-size: 14px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .shop-now-btn {
+            background-color: #f5a623;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .shop-now-btn:hover {
+            background-color: #2c2c2c;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2c2c2c;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-content div {
+            margin: 10px;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #bbb;
+        }
+        .category-filter select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            border: none;
+        }
+        
+        .category-filter label {
+            font-size: 18px;
+            margin-right: 10px;
+            color: white;
+        }
+        .category-filter {
+            padding: 20px;
+            text-align: center
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">
+        Beautyhub
+    </div>
+    <div class="nav-links">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'orders' %}">Your Orders</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <span class="profile">
+            <a href="{% url 'cart' %}"><img src="{% static 'images/cart.png' %}" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;"></a>
+        </span>
+        {% if user.is_authenticated %}
+        <span class="profile">
+            <a href="{% url 'profile_update' %}"><img src="{% static 'images/profile.png' %}" alt="Profile" style="width: 30px; height: 30px; border-radius: 50%;"></a>
+        </span>
+        <span>Welcome, {{ user.username }}</span>
+        <a href="{% url 'user_logout' %}">Logout</a>
+        {% else %}
+        <a href="{% url 'user_login' %}">Login</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="search-bar">
+    <form method="GET" action="{% url 'search' %}">
+        <input type="text" name="query" placeholder="Search products...">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+
+<div class="slider">
+    <div class="slides">
+        <img src="{% static 'images/eyeliner.jpg' %}" alt="Eyeliner">
+        <img src="{% static 'images/foundation.jpg' %}" alt="Foundation">
+        <img src="{% static 'images/blush.jpg' %}" alt="Blush">
+    </div>
+    <div class="slider-controls">
+        <button id="prevBtn">&#10094;</button>
+        <button id="nextBtn">&#10095;</button>
+    </div>
+</div>
+
+
+<h2 class="products-heading">Our Products</h2>
+
+<div class="grid-container">
+    {% for product in productdata %}
+    <div class="product">
+        <a href="/product/{{ product.id }}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </a>
+        <div class="title">{{ product.name }}</div>
+        <div class="price">Rs.{{ product.price }}</div>
+        <a href="/product/{{ product.id }}" class="shop-now-btn">Shop Now</a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="footer">
+    <div class="footer-content">
+        <div>
+            <h3>Contact Us</h3>
+            <p>Email: beautyhub@gmail.com</p>
+            <p>Phone: +1234567890</p>
+        </div>
+        <div>
+            <h3>Location</h3>
+            <p>123 Main Street</p>
+            <p>City, Country</p>
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; 2024 Beautyhub. All rights reserved.
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slides img').length;
+
+    document.getElementById('prevBtn').onclick = () => {
+        currentSlide = (currentSlide > 0) ? currentSlide - 1 : totalSlides - 1;
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    };
+
+    document.getElementById('nextBtn').onclick = () => {
+        currentSlide = (currentSlide < totalSlides - 1) ? currentSlide + 1 : 0;
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    };
+</script>
+</body>
+</html>
